@@ -1,7 +1,7 @@
 <?php
 //namespace App\Models\User;
 class User{
-     public $id="";
+    public $id="";
 	public $name="";
 	public $email="";
 	public 	$phone="";
