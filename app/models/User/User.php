@@ -7,6 +7,7 @@ class User{
 	public 	$phone="";
 	public $district="";
 	public $thana="";
+	public $image="";
 	public function __construct()
 	{
 		//echo"this is from model";
@@ -52,6 +53,9 @@ class User{
 		if (array_key_exists('id',$data)) {
 			$this->id=$data['id'];
 		}
+		if (array_key_exists('image',$data)) {
+			$this->image=$data['image'];
+		}
         
 	}
 	public function getThana($district_id)
@@ -67,7 +71,7 @@ class User{
 	{
 	session_start();
     $mysqli=new mysqli('localhost','root','','test');
-    $query=$mysqli->query("INSERT INTO user(name,email,phone,district_id,thana_id) VALUES('$this->name','$this->email','$this->phone','$this->district','$this->thana')");
+    $query=$mysqli->query("INSERT INTO user(name,email,phone,district_id,thana_id,image) VALUES('$this->name','$this->email','$this->phone','$this->district','$this->thana','$this->image')");
     $_SESSION['success_msg']="Data Added successfully";
     header('location:../../index.php');
 	}

@@ -41,14 +41,18 @@ $userInfo=$user->getusers();
 	<table class="table">
 		<tr>
 			<th>Name</th>
+      <th>Image</th>
 			<th>Email</th>
 			<th>Phone</th>
 			<th>Action</th>
 		</tr>
-    <?php foreach ($userInfo as $user) {
+    <?php 
+     if (!empty($userInfo)) {
+    foreach ($userInfo as $user) {
       ?>
     <tr>
       <td><?php echo $user['name']; ?></td>
+      <td><img src="app/public/images/<?php echo $user['image']; ?>" style="width:50px;height: 40px; " ></td>
       <td><?php echo $user['email']; ?></td>
       <td><?php echo $user['phone']; ?></td>
       <td>
@@ -57,11 +61,11 @@ $userInfo=$user->getusers();
         <a href="app/controller/userController.php?delete=<?php echo $user['id']; ?>" class="btn btn-danger" onclick="return confirm('Are Sure To Delete');" >Delete</a>
       </td>
     </tr>
-  <?php }?>
+  <?php } }?>
 	</table>
 	<center><h3>Insert User Data</h3></center>
    
-<form method="post" action="app/controller/userController.php">
+<form method="post" action="app/controller/userController.php" enctype="multipart/form-data">
   <div class="form-group">
     <label for="exampleFormControlInput1">Name</label>
     <input type="text" class="form-control" placeholder="Enter name" name="name">
@@ -90,6 +94,10 @@ $userInfo=$user->getusers();
       
       <option>Select Thana</option>
     </select>
+  </div>
+   <div class="form-group">
+    <label for="exampleFormControlInput1">Image</label>
+    <input type="file" class="form-control" name="image">
   </div>
 <div class="form-group">
 	<input type="submit" name="" value="Save" class="btn btn-primary">
