@@ -1,0 +1,90 @@
+<?php
+//namespace App\Models\User;
+class User{
+
+	public $name="";
+	public $email="";
+	public 	$phone="";
+	public $district="";
+	public $thana="";
+	public function __construct()
+	{
+		//echo"this is from model";
+	
+	}
+	public function getUsers()
+	{
+		 $mysqli=new mysqli('localhost','root','','test') or die();
+		$query=$mysqli->query("SELECT * from user");
+		while($row=$query->fetch_assoc()){
+			$this->user[]=$row;
+		}
+		return $this->user;
+	}
+	public function getDistrict()
+	{
+		$mysqli=new mysqli('localhost','root','','test') or die();
+		$query=$mysqli->query("SELECT * from district ");
+		while($row=$query->fetch_assoc()){
+			$this->data[]=$row;
+		}
+		return $this->data;
+	}
+	public function dataProcess($data)
+	{
+		if (array_key_exists('name', $data)) {
+			$this->name=$data['name'];
+		}
+        
+        if (array_key_exists('email', $data)) {
+			$this->email=$data['email'];
+		}
+
+       if (array_key_exists('phone', $data)) {
+			$this->phone=$data['phone'];
+		}
+        if (array_key_exists('district', $data)) {
+			$this->district=$data['district'];
+		}
+		if (array_key_exists('thana',$data)) {
+			$this->thana=$data['thana'];
+		}
+        
+	}
+	public function getThana($district_id)
+	{
+		$mysqli=new mysqli('localhost','root','','test') or die();
+		$query=$mysqli->query("SELECT * FROM thana WHERE district_id=$district_id");
+		while($row=$query->fetch_assoc()){
+			$this->data[]=$row;
+		}
+		return $this->data;
+	}
+	public function storeData()
+	{
+	session_start();
+    $mysqli=new mysqli('localhost','root','','test');
+    $query=$mysqli->query("INSERT INTO user(name,email,phone,district_id,thana_id) VALUES('$this->name','$this->email','$this->phone','$this->district','$this->thana')");
+    $_SESSION['success_msg']="Data Added successfully";
+    header('location:../../index.php');
+	}
+	public function deleteUser($user_id)
+	{  session_start();
+		$mysqli=new mysqli('localhost','root','','test') or die();
+		$query=$mysqli->query("DELETE FROM user WHERE user.id=$user_id");
+		$_SESSION['delete_msg']="A User has benn Deleted";
+		header('location:../../index.php');
+	}
+	public function viewUser($user_id)
+	{
+		$mysqli=new mysqli('localhost','root','','test') or die();
+		$query=$mysqli->query("SELECT user.name as user_name,district.name as district_name,thana.name as thana_name,phone,email FROM user JOIN district 
+       ON user.district_id = district.id JOIN thana ON user.thana_id=thana.id WHERE user.id=$user_id");
+		
+		while ($row=$query->fetch_assoc()) {
+			$this->userInfo[]=$row;
+		}
+		return $this->userInfo;
+
+	}
+}
