@@ -1,7 +1,7 @@
 <?php
 //namespace App\Models\User;
 class User{
-
+     public $id="";
 	public $name="";
 	public $email="";
 	public 	$phone="";
@@ -49,6 +49,9 @@ class User{
 		if (array_key_exists('thana',$data)) {
 			$this->thana=$data['thana'];
 		}
+		if (array_key_exists('id',$data)) {
+			$this->id=$data['id'];
+		}
         
 	}
 	public function getThana($district_id)
@@ -78,7 +81,7 @@ class User{
 	public function viewUser($user_id)
 	{
 		$mysqli=new mysqli('localhost','root','','test') or die();
-		$query=$mysqli->query("SELECT user.name as user_name,district.name as district_name,thana.name as thana_name,phone,email FROM user JOIN district 
+		$query=$mysqli->query("SELECT user.id as user_id,user.name as user_name,district.name as district_name,thana.name as thana_name,phone,email FROM user JOIN district 
        ON user.district_id = district.id JOIN thana ON user.thana_id=thana.id WHERE user.id=$user_id");
 		
 		while ($row=$query->fetch_assoc()) {
@@ -86,5 +89,12 @@ class User{
 		}
 		return $this->userInfo;
 
+	}
+	public function updateUser(){
+		session_start();
+		$mysqli=new mysqli('localhost','root','','test') or die();
+		$query=$mysqli->query("UPDATE user SET name='$this->name',email='$this->email',phone='$this->phone',district_id='$this->district',thana_id='$this->thana' WHERE user.id=$this->id");
+		$_SESSION['update_msg']="Data Upadte successfully";
+    header('location:../../index.php');
 	}
 }

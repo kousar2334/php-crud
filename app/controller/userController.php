@@ -12,9 +12,7 @@ if (isset($_GET['delete'])) {
      $user->deleteUser($user_id);
 
 }
-if (isset($_GET['view'])) {
-	$user_id=$_GET['view'];
-	echo "<pre>";
-	print_r($userInfo=$user->viewUser($user_id)) ;
-	
+if (isset($_GET['update'])) {
+	$user_id=$_GET['update'];
+	echo $user_id;
 }
