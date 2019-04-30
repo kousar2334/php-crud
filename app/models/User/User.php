@@ -8,19 +8,28 @@ class User{
 	public $district="";
 	public $thana="";
 	public $image="";
+	private $conn="";
 	public function __construct()
 	{
-		//echo"this is from model";
-	
+		$this->conn=new mysqli('localhost','root','','test') or die();
 	}
 	public function getUsers()
 	{
-		 $mysqli=new mysqli('localhost','root','','test') or die();
-		$query=$mysqli->query("SELECT * from user");
-		while($row=$query->fetch_assoc()){
+		
+		 $sql="SELECT * from user";
+		 $result = mysqli_query($this->conn,$sql);
+		 if(mysqli_num_rows($result)>0){
+		 	while($row=mysqli_fetch_array($result)){
 			$this->user[]=$row;
-		}
-		return $this->user;
+		 }
+		 return $this->user;
+		 }
+		
+		 else{
+		 	echo "no result";
+		 }
+		 
+		
 	}
 	public function getDistrict()
 	{

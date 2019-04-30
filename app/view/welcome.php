@@ -9,8 +9,11 @@ $userInfo=$user->getusers();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>php crud</title>
+
+	<title >php crud</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -19,8 +22,17 @@ $userInfo=$user->getusers();
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
 <body>
+  <h1 id="text">This is for text</h1>
+<a href="app/view/surplus.php" >Surplus</a>
+<a href="search.php" >Search</a>
+<a href="data.php" >Data srore</a>
+<a href="se.php" >Session</a><br>
+<a href="export.php" >Export data</a><br>
+<a href="import.php" >Import data</a>
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-ls-20">
   <?php
             if(isset($_SESSION['success_msg']) && !empty($_SESSION['success_msg'])){?>
                <p class="alert alert-success"><?php echo $_SESSION['success_msg'];?></p>
@@ -63,6 +75,8 @@ $userInfo=$user->getusers();
     </tr>
   <?php } }?>
 	</table>
+</div>
+</div>
 	<center><h3>Insert User Data</h3></center>
    
 <form method="post" action="app/controller/userController.php" enctype="multipart/form-data">
@@ -80,11 +94,13 @@ $userInfo=$user->getusers();
   </div>
 
   <div class="form-group">
+    
     <label for="exampleFormControlSelect1">District</label>
-    <select class="form-control"  name="district" id="district">
+    <select class="form-control selectpicker"  name="district" id="district">
       <option>Select District</option>
       <?php foreach ($districts as $district) { ?>
-      <option value="<?php echo $district['id']; ?>"><?php echo $district['name'];?></option>
+      <option value="<?php echo $district['id']; ?>">&#xf0f9;<?php echo $district['name'];?></option>
+
      <?php }?>
     </select>
   </div>
@@ -125,5 +141,17 @@ $userInfo=$user->getusers();
        
     });
    });
-
+$(window).scroll(function(){
+    if ($(window).scrollTop()) {
+       // $('.sticky-header').addClass('fixed');
+        $("#text").css("color", "red");
+        // $("#text").css("position", "fixed");
+        $("#text").animate("font-size", "10px");
+    }
+    else {
+      // $("#text").("color", "black");
+      // $("#text").css("position", "relative");
+      // $("#text").animate("font-size", "30px");
+    }
+});
 </script>
